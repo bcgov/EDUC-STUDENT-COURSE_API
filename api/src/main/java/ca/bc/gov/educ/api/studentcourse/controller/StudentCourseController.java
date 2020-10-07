@@ -17,7 +17,7 @@ import ca.bc.gov.educ.api.studentcourse.util.StudentCourseApiConstants;
 
 @CrossOrigin
 @RestController
-@RequestMapping(StudentCourseApiConstants.COURSE_ACHIEVEMENT_API_ROOT_MAPPING)
+@RequestMapping(StudentCourseApiConstants.STUDENT_COURSE_API_ROOT_MAPPING)
 public class StudentCourseController {
 
     private static Logger logger = LoggerFactory.getLogger(StudentCourseController.class);
@@ -25,7 +25,7 @@ public class StudentCourseController {
     @Autowired
     StudentCourseService studentCourseService;
 
-    @GetMapping(StudentCourseApiConstants.GET_COURSE_ACHIEVEMENT_BY_PEN_MAPPING)
+    @GetMapping(StudentCourseApiConstants.GET_STUDENT_COURSE_BY_PEN_MAPPING)
     public List<StudentCourse> getStudentCourseByPEN(@PathVariable String pen) {
         logger.debug("#Get All Course Achievements by PEN: " + pen);
         return studentCourseService.getStudentCourseList(pen);
