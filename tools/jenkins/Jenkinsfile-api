@@ -43,7 +43,7 @@ pipeline{
       JOB_NAME = 'master'
       TAG = 'dev'
 
-      APP_NAME = 'course-achievement-api'
+      APP_NAME = 'student-course-api'
       APP_DOMAIN = 'pathfinder.gov.bc.ca'
 
       SOURCE_REPO_RAW = 'https://github.com/${OWNER}/${REPO_NAME}/master'
