@@ -1,10 +1,10 @@
-package ca.bc.gov.educ.api.courseachievement;
+package ca.bc.gov.educ.api.studentcourse;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class EducCourseAchievementApiApplicationTests {
+class EducStudentCourseApiApplicationTests {
 
 	//@Test
 	void contextLoads() {
