@@ -47,4 +47,20 @@ public class StudentCourseApiUtils {
 
         return date;
     }
+    
+    public static Date parseTraxDate (String sessionDate) {
+        if (sessionDate == null)
+            return null;
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(StudentCourseApiConstants.TRAX_DATE_FORMAT);
+        Date date = new Date();
+
+        try {
+            date = simpleDateFormat.parse(sessionDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return date;
+    }
 }

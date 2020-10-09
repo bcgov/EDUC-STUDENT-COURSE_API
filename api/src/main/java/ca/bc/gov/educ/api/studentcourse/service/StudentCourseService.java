@@ -1,18 +1,18 @@
 package ca.bc.gov.educ.api.studentcourse.service;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import ca.bc.gov.educ.api.studentcourse.model.dto.StudentCourse;
 import ca.bc.gov.educ.api.studentcourse.model.entity.StudentCourseEntity;
 import ca.bc.gov.educ.api.studentcourse.model.transformer.StudentCourseTransformer;
 import ca.bc.gov.educ.api.studentcourse.repository.StudentCourseRepository;
-
-import java.util.*;
 
 @Service
 public class StudentCourseService {
@@ -37,15 +37,7 @@ public class StudentCourseService {
         List<StudentCourse> studentCourse  = new ArrayList<StudentCourse>();
 
         try {
-        	studentCourse = studentCourseTransformer.transformToDTO(
-        			studentCourseRepo.findByPen(
-                            pen, Sort.by(Sort.Order.asc("pen"),
-                                    Sort.Order.asc("courseCode"),
-                                    Sort.Order.desc("completedCoursePercentage"),
-                                    Sort.Order.asc("sessionDate")
-                            )
-                    )
-            );
+        	studentCourse = studentCourseTransformer.transformToDTO(studentCourseRepo.findByPen(pen));
             logger.debug(studentCourse.toString());
         } catch (Exception e) {
             logger.debug("Exception:" + e);
