@@ -8,7 +8,7 @@ import lombok.Data;
 @Component
 public class StudentCourse {
 
-	private CourseId courseKey;
+	private StudentCourseId courseKey;
 	private String courseDescription;
 	private String courseLevel;
 	private String gradReqMet;

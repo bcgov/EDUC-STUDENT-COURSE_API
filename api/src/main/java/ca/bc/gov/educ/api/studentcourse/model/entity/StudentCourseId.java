@@ -20,7 +20,7 @@ import lombok.Data;
  */
 @Embeddable
 @Data
-public class CourseId implements Serializable {
+public class StudentCourseId implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -37,7 +37,7 @@ public class CourseId implements Serializable {
     @Column(name = "CRSE_SESSION", insertable = false, updatable = false)
     private String sessionDate;
 
-    public CourseId() {
+    public StudentCourseId() {
     }
 
     /**
@@ -48,7 +48,7 @@ public class CourseId implements Serializable {
      * @param crseLevel
      * @param crseSession
      */
-    public CourseId(String studNo, String crseCode, String crseLevel, String crseSession) {
+    public StudentCourseId(String studNo, String crseCode, String crseLevel, String crseSession) {
         this.pen = studNo;
         this.courseCode = crseCode;
         this.courseLevel = crseLevel;

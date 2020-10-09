@@ -16,7 +16,7 @@ import lombok.Data;
 public class StudentCourseEntity {
    
 	@EmbeddedId
-    private CourseId courseKey;
+    private StudentCourseId courseKey;
     
     @Column(name = "STUDY_TYPE", nullable = true)
     private String gradReqMet;    

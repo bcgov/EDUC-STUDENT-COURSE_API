@@ -1,7 +1,6 @@
 package ca.bc.gov.educ.api.studentcourse.model.transformer;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -9,7 +8,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import ca.bc.gov.educ.api.studentcourse.model.dto.CourseId;
+import ca.bc.gov.educ.api.studentcourse.model.dto.StudentCourseId;
 import ca.bc.gov.educ.api.studentcourse.model.dto.StudentCourse;
 import ca.bc.gov.educ.api.studentcourse.model.entity.StudentCourseEntity;
 import ca.bc.gov.educ.api.studentcourse.util.StudentCourseApiUtils;
@@ -43,7 +42,7 @@ public class StudentCourseTransformer {
         for (StudentCourseEntity courseAchievementEntity : courseAchievementEntities) {
             StudentCourse courseAchievement = new StudentCourse();
             courseAchievement = modelMapper.map(courseAchievementEntity, StudentCourse.class);
-            CourseId courseKeyObj = new CourseId();
+            StudentCourseId courseKeyObj = new StudentCourseId();
             courseKeyObj.setPen(courseAchievementEntity.getCourseKey().getPen());
             courseKeyObj.setCourseCode(courseAchievementEntity.getCourseKey().getCourseCode());
             courseKeyObj.setCourseLevel(courseAchievementEntity.getCourseKey().getCourseLevel());
