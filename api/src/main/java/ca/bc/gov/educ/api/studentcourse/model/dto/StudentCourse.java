@@ -8,9 +8,11 @@ import lombok.Data;
 @Component
 public class StudentCourse {
 
-	private StudentCourseId courseKey;
+	private String pen;
+    private String courseCode;
+    private String courseLevel;
+    private String sessionDate;
 	private String courseDescription;
-	private String courseLevel;
 	private String gradReqMet;
 	private Double completedCoursePercentage;
 	private String completedCourseLetterGrade;
@@ -23,11 +25,13 @@ public class StudentCourse {
 	
 	@Override
 	public String toString() {
-		return "StudentCourse [courseKey=" + courseKey + ", courseDescription=" + courseDescription
-				+ ", courseLevel=" + courseLevel + ", gradReqMet=" + gradReqMet + ", completedCoursePercentage="
-				+ completedCoursePercentage + ", completedCourseLetterGrade=" + completedCourseLetterGrade
-				+ ", interimPercent=" + interimPercent + ", interimLetterGrade=" + interimLetterGrade + ", credits="
-				+ credits + ", creditsUsedForGrad=" + creditsUsedForGrad + ", relatedCourse=" + relatedCourse
-				+ ", relatedLevel=" + relatedLevel + "]";
-	}	
+		return "StudentCourse [pen=" + pen + ", courseCode=" + courseCode + ", courseLevel=" + courseLevel
+				+ ", sessionDate=" + sessionDate + ", courseDescription=" + courseDescription + ", gradReqMet="
+				+ gradReqMet + ", completedCoursePercentage=" + completedCoursePercentage
+				+ ", completedCourseLetterGrade=" + completedCourseLetterGrade + ", interimPercent=" + interimPercent
+				+ ", interimLetterGrade=" + interimLetterGrade + ", credits=" + credits + ", creditsUsedForGrad="
+				+ creditsUsedForGrad + ", relatedCourse=" + relatedCourse + ", relatedLevel=" + relatedLevel + "]";
+	}
+	
+		
 }

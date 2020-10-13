@@ -8,7 +8,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import ca.bc.gov.educ.api.studentcourse.model.dto.StudentCourseId;
 import ca.bc.gov.educ.api.studentcourse.model.dto.StudentCourse;
 import ca.bc.gov.educ.api.studentcourse.model.entity.StudentCourseEntity;
 import ca.bc.gov.educ.api.studentcourse.util.StudentCourseApiUtils;
@@ -42,12 +41,12 @@ public class StudentCourseTransformer {
         for (StudentCourseEntity courseAchievementEntity : courseAchievementEntities) {
             StudentCourse courseAchievement = new StudentCourse();
             courseAchievement = modelMapper.map(courseAchievementEntity, StudentCourse.class);
-            StudentCourseId courseKeyObj = new StudentCourseId();
-            courseKeyObj.setPen(courseAchievementEntity.getCourseKey().getPen());
-            courseKeyObj.setCourseCode(courseAchievementEntity.getCourseKey().getCourseCode());
-            courseKeyObj.setCourseLevel(courseAchievementEntity.getCourseKey().getCourseLevel());
-            courseKeyObj.setSessionDate(StudentCourseApiUtils.parseTraxDate(courseAchievementEntity.getCourseKey().getSessionDate()).toLocaleString());
-            courseAchievement.setCourseKey(courseKeyObj);
+           
+            courseAchievement.setPen(courseAchievementEntity.getCourseKey().getPen());
+            courseAchievement.setCourseCode(courseAchievementEntity.getCourseKey().getCourseCode());
+            courseAchievement.setCourseLevel(courseAchievementEntity.getCourseKey().getCourseLevel());
+            courseAchievement.setSessionDate(StudentCourseApiUtils.parseTraxDate(courseAchievementEntity.getCourseKey().getSessionDate()).toLocaleString());
+            
             courseAchievementList.add(courseAchievement);
         }
 
