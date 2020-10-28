@@ -37,7 +37,7 @@ public class StudentCourseEntity {
     private Integer credits;
     
     @Column(name = "USED_FOR_GRAD", nullable = true)
-    private Integer creditsUsedForGrad;    
+    private String creditsUsedForGrad;    
 
     @Column(name = "CRSE_TYPE", nullable = true)
     private String courseType;
@@ -46,8 +46,5 @@ public class StudentCourseEntity {
     private String relatedCourse; 
     
     @Column(name = "RELATED_LEVEL", nullable = true)
-    private String relatedLevel; 
-    
-    @Column(name = "COURSE_DESC", nullable = true)
-    private String courseDescription; 
+    private String relatedLevel;  
 }
