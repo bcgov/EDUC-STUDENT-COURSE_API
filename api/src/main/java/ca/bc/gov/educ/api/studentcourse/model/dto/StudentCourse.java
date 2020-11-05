@@ -23,16 +23,19 @@ public class StudentCourse {
 	private Integer creditsUsedForGrad;	
 	private String relatedCourse;
 	private String relatedLevel;
+	private String hasRelatedCourse;
 	
 	@Override
 	public String toString() {
-		return "StudentCourse [pen=" + pen + ", courseCode=" + courseCode + ", courseLevel=" + courseLevel
-				+ ", sessionDate=" + sessionDate + ", courseDescription=" + courseDescription + ", gradReqMet="
-				+ gradReqMet + ", completedCoursePercentage=" + completedCoursePercentage
-				+ ", completedCourseLetterGrade=" + completedCourseLetterGrade + ", interimPercent=" + interimPercent
-				+ ", interimLetterGrade=" + interimLetterGrade + ", credits=" + credits + ", creditsUsedForGrad="
-				+ creditsUsedForGrad + ", relatedCourse=" + relatedCourse + ", relatedLevel=" + relatedLevel + "]";
+		return "StudentCourse [pen=" + pen + ", courseCode=" + courseCode + ", courseName=" + courseName
+				+ ", courseLevel=" + courseLevel + ", sessionDate=" + sessionDate + ", courseDescription="
+				+ courseDescription + ", gradReqMet=" + gradReqMet + ", completedCoursePercentage="
+				+ completedCoursePercentage + ", completedCourseLetterGrade=" + completedCourseLetterGrade
+				+ ", interimPercent=" + interimPercent + ", interimLetterGrade=" + interimLetterGrade + ", credits="
+				+ credits + ", creditsUsedForGrad=" + creditsUsedForGrad + ", relatedCourse=" + relatedCourse
+				+ ", relatedLevel=" + relatedLevel + ", hasRelatedCourse=" + hasRelatedCourse + "]";
 	}
+	
 	
 		
 }
