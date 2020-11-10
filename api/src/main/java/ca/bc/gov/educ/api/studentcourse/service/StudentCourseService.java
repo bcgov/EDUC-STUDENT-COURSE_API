@@ -8,15 +8,16 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import ca.bc.gov.educ.api.studentcourse.model.dto.Course;
 import ca.bc.gov.educ.api.studentcourse.model.dto.StudentCourse;
 import ca.bc.gov.educ.api.studentcourse.model.entity.StudentCourseEntity;
-import ca.bc.gov.educ.api.studentcourse.model.transformer.CourseTransformer;
 import ca.bc.gov.educ.api.studentcourse.model.transformer.StudentCourseTransformer;
-import ca.bc.gov.educ.api.studentcourse.repository.CourseRepository;
 import ca.bc.gov.educ.api.studentcourse.repository.StudentCourseRepository;
+import ca.bc.gov.educ.api.studentcourse.util.StudentCourseApiConstants;
 
 @Service
 public class StudentCourseService {
@@ -29,11 +30,11 @@ public class StudentCourseService {
     @Autowired
     private StudentCourseTransformer studentCourseTransformer;
     
-    @Autowired
-    private CourseRepository courseRepo;
+    @Value(StudentCourseApiConstants.ENDPOINT_COURSE_BY_CRSE_CODE_URL)
+    private String getCourseByCrseCodeURL;
     
     @Autowired
-    private CourseTransformer courseTransformer;
+    RestTemplate restTemplate;
 
     private static Logger logger = LoggerFactory.getLogger(StudentCourseService.class);
 
@@ -45,7 +46,6 @@ public class StudentCourseService {
      */
     public List<StudentCourse> getStudentCourseList(String pen) {
         List<StudentCourse> studentCourse  = new ArrayList<StudentCourse>();
-
         try {
         	studentCourse = studentCourseTransformer.transformToDTO(studentCourseRepo.findByPen(pen));
         	studentCourse.forEach(sC -> {
@@ -54,7 +54,8 @@ public class StudentCourseService {
         		}else {
         			sC.setHasRelatedCourse("N");
         		}
-        		Course course = courseTransformer.transformToDTO(courseRepo.findByCourseCode(sC.getCourseCode(), sC.getCourseLevel()));
+        		String url = String.format(getCourseByCrseCodeURL,sC.getCourseCode(),sC.getCourseLevel());
+        		Course course = restTemplate.getForObject(url, Course.class);
         		if(course != null) {
         			sC.setCourseName(course.getCourseName());
         		}
