@@ -33,8 +33,7 @@ public class StudentCourseTransformer {
         return courseAchievement;
     }
 
-    @SuppressWarnings("deprecation")
-	public List<StudentCourse> transformToDTO (Iterable<StudentCourseEntity> courseAchievementEntities ) {
+    public List<StudentCourse> transformToDTO (Iterable<StudentCourseEntity> courseAchievementEntities ) {
 
         List<StudentCourse> courseAchievementList = new ArrayList<StudentCourse>();
 
@@ -45,7 +44,7 @@ public class StudentCourseTransformer {
             courseAchievement.setPen(courseAchievementEntity.getCourseKey().getPen());
             courseAchievement.setCourseCode(courseAchievementEntity.getCourseKey().getCourseCode());
             courseAchievement.setCourseLevel(courseAchievementEntity.getCourseKey().getCourseLevel());
-            courseAchievement.setSessionDate(StudentCourseApiUtils.parseTraxDate(courseAchievementEntity.getCourseKey().getSessionDate()).toLocaleString());
+            courseAchievement.setSessionDate(StudentCourseApiUtils.parseTraxDate(courseAchievementEntity.getCourseKey().getSessionDate()));
             
             courseAchievementList.add(courseAchievement);
         }
