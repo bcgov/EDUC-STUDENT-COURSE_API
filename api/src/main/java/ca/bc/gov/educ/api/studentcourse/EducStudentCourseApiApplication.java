@@ -1,6 +1,7 @@
 package ca.bc.gov.educ.api.studentcourse;
 
 import org.modelmapper.ModelMapper;
+import org.modelmapper.PropertyMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -34,8 +35,10 @@ public class EducStudentCourseApiApplication {
 	public ModelMapper modelMapper() {
 
 		ModelMapper modelMapper = new ModelMapper();
-		modelMapper.typeMap(StudentCourseEntity.class, StudentCourse.class);
+		modelMapper.typeMap(StudentCourseEntity.class, StudentCourse.class)
+				.addMappings(sc -> { sc.skip(StudentCourse::setNotCompleted); });
 		modelMapper.typeMap(StudentCourse.class, StudentCourseEntity.class);
+
 		return modelMapper;
 	}
 	

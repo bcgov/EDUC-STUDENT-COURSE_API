@@ -25,5 +25,5 @@ public class StudentCourseApiConstants {
     
     public static final String TRAX_DATE_FORMAT = "yyyyMM";
     
-    public static final String ENDPOINT_COURSE_BY_CRSE_CODE_URL="${endpoint.course-api.course_by_crse_code}";
+    public static final String ENDPOINT_COURSE_BY_CRSE_CODE_URL="${endpoint.course-api.course_by_crse_code.url}";
 }

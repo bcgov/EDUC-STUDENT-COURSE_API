@@ -4,6 +4,10 @@ package ca.bc.gov.educ.api.studentcourse.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import ca.bc.gov.educ.api.studentcourse.model.dto.CourseRequirement;
+import ca.bc.gov.educ.api.studentcourse.model.dto.CourseRequirements;
+import ca.bc.gov.educ.api.studentcourse.model.transformer.CourseRequirementTransformer;
+import ca.bc.gov.educ.api.studentcourse.repository.CourseRequirementRepository;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,16 +29,25 @@ public class StudentCourseService {
     @Autowired
     private StudentCourseRepository studentCourseRepo;
 
+    @Autowired
+    private CourseRequirementRepository courseRequirementRepository;
+
     Iterable<StudentCourseEntity> studentCourseEntities;
 
     @Autowired
     private StudentCourseTransformer studentCourseTransformer;
+
+    @Autowired
+    private CourseRequirementTransformer courseRequirementTransformer;
     
     @Value(StudentCourseApiConstants.ENDPOINT_COURSE_BY_CRSE_CODE_URL)
     private String getCourseByCrseCodeURL;
     
     @Autowired
     RestTemplate restTemplate;
+
+    @Autowired
+    CourseRequirements courseRequirements;
 
     private static Logger logger = LoggerFactory.getLogger(StudentCourseService.class);
 
@@ -45,10 +58,10 @@ public class StudentCourseService {
      * @throws java.lang.Exception
      */
     public List<StudentCourse> getStudentCourseList(String pen) {
-        List<StudentCourse> studentCourse  = new ArrayList<StudentCourse>();
+        List<StudentCourse> studentCourses  = new ArrayList<StudentCourse>();
         try {
-        	studentCourse = studentCourseTransformer.transformToDTO(studentCourseRepo.findByPen(pen));
-        	studentCourse.forEach(sC -> {
+        	studentCourses = studentCourseTransformer.transformToDTO(studentCourseRepo.findByPen(pen));
+        	studentCourses.forEach(sC -> {
         		if(StringUtils.isNotBlank(sC.getRelatedCourse()) || StringUtils.isNotBlank(sC.getRelatedLevel()) || StringUtils.isNotBlank(sC.getCourseDescription())) {
         			sC.setHasRelatedCourse("Y");
         		}else {
@@ -60,11 +73,24 @@ public class StudentCourseService {
         			sC.setCourseName(course.getCourseName());
         		}
         	});
-            logger.debug(studentCourse.toString());
+            logger.debug(studentCourses.toString());
         } catch (Exception e) {
             logger.debug("Exception:" + e);
         }
 
-        return studentCourse;
+        return studentCourses;
+    }
+
+    public CourseRequirements getCourseRequirements() {
+        courseRequirements.setCourseRequirements(
+                courseRequirementTransformer.transformToDTO(courseRequirementRepository.findAll()));
+        return courseRequirements;
+    }
+
+    public CourseRequirements getCourseRequirements(String courseCode, String courseLevel) {
+        courseRequirements.setCourseRequirements(
+                courseRequirementTransformer.transformToDTO(
+                        courseRequirementRepository.findByCourseCodeAndCourseLevel(courseCode, courseLevel)));
+        return courseRequirements;
     }
 }
