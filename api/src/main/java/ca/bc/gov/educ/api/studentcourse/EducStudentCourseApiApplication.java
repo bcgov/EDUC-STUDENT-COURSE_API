@@ -31,8 +31,7 @@ public class EducStudentCourseApiApplication {
 	public ModelMapper modelMapper() {
 
 		ModelMapper modelMapper = new ModelMapper();
-		modelMapper.typeMap(StudentCourseEntity.class, StudentCourse.class)
-				.addMappings(sc -> { sc.skip(StudentCourse::setNotCompleted); });
+		modelMapper.typeMap(StudentCourseEntity.class, StudentCourse.class);
 		modelMapper.typeMap(StudentCourse.class, StudentCourseEntity.class);
 
 		return modelMapper;
