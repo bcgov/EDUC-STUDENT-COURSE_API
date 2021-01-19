@@ -37,6 +37,9 @@ public class StudentCourseService {
     @Value(StudentCourseApiConstants.ENDPOINT_COURSE_BY_CRSE_CODE_URL)
     private String getCourseByCrseCodeURL;
     
+    @Value(StudentCourseApiConstants.ENDPOINT_COURSE_BY_CRSE_CODE_ONLY)
+    private String getCourseByCrseCodeOnlyURL;
+    
     @Autowired
     RestTemplate restTemplate;
 
@@ -60,10 +63,19 @@ public class StudentCourseService {
         		}else {
         			sC.setHasRelatedCourse("N");
         		}
-        		Course course = restTemplate.exchange(String.format(getCourseByCrseCodeURL,sC.getCourseCode(),sC.getCourseLevel()), HttpMethod.GET,
-        				new HttpEntity<>(httpHeaders), Course.class).getBody();
-        		if(course != null) {
-        			sC.setCourseName(course.getCourseName());
+        		
+        		if(sC.getCourseLevel().equalsIgnoreCase("   ")) {
+        			Course course = restTemplate.exchange(String.format(getCourseByCrseCodeOnlyURL,sC.getCourseCode()), HttpMethod.GET,
+            				new HttpEntity<>(httpHeaders), Course.class).getBody();
+            		if(course != null) {
+            			sC.setCourseName(course.getCourseName());
+            		}
+        		}else {
+	        		Course course = restTemplate.exchange(String.format(getCourseByCrseCodeURL,sC.getCourseCode(),sC.getCourseLevel()), HttpMethod.GET,
+	        				new HttpEntity<>(httpHeaders), Course.class).getBody();
+	        		if(course != null) {
+	        			sC.setCourseName(course.getCourseName());
+	        		}
         		}
         	});
             logger.debug(studentCourses.toString());
