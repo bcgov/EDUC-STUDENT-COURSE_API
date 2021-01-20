@@ -2,6 +2,8 @@ package ca.bc.gov.educ.api.studentcourse.service;
 
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -78,11 +80,14 @@ public class StudentCourseService {
 	        		}
         		}
         	});
-            logger.debug(studentCourses.toString());
         } catch (Exception e) {
             logger.debug("Exception:" + e);
         }
-
+        Collections.sort(studentCourses, Comparator.comparing(StudentCourse::getPen)
+                .thenComparing(StudentCourse::getCompletedCoursePercentage)
+                .thenComparing(StudentCourse::getCredits)
+                .thenComparing(StudentCourse::getCourseLevel)
+                .reversed());
         return studentCourses;
     }
 }
