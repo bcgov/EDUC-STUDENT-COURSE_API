@@ -24,6 +24,7 @@ public class StudentCourse {
 	private String relatedCourse;
 	private String relatedLevel;
 	private String hasRelatedCourse;
+	private String genericCourseType;
 	private boolean isNotCompleted;
 	private boolean isFailed;
 	private boolean isDuplicate;
@@ -36,7 +37,7 @@ public class StudentCourse {
 				+ completedCoursePercentage + ", completedCourseLetterGrade=" + completedCourseLetterGrade
 				+ ", interimPercent=" + interimPercent + ", interimLetterGrade=" + interimLetterGrade + ", credits="
 				+ credits + ", creditsUsedForGrad=" + creditsUsedForGrad + ", relatedCourse=" + relatedCourse
-				+ ", relatedLevel=" + relatedLevel + ", hasRelatedCourse=" + hasRelatedCourse + "]";
+				+ ", relatedLevel=" + relatedLevel + ", hasRelatedCourse=" + hasRelatedCourse + ", genericCourseType="+genericCourseType + "]";
 	}
 	
 	
