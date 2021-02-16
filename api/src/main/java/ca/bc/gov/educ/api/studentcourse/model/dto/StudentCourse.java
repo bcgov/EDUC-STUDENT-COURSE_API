@@ -60,6 +60,10 @@ public class StudentCourse {
 	public String getRelatedLevel() {
 		return  relatedLevel != null ?  relatedLevel.trim(): null;
 	}
+	
+	public String getGenericCourseType() {
+		return genericCourseType != null ?  genericCourseType.trim(): null;
+	}
 
 	public Double getCompletedCoursePercentage() {
 		if(completedCoursePercentage == null) {
