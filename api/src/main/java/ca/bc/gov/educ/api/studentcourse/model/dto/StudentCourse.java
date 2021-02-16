@@ -20,7 +20,7 @@ public class StudentCourse {
 	private Double interimPercent;
 	private String interimLetterGrade;
 	private Integer credits;
-	private Integer creditsUsedForGrad;	
+	private String creditsUsedForGrad;	
 	private String relatedCourse;
 	private String relatedLevel;
 	private String hasRelatedCourse;
@@ -28,6 +28,45 @@ public class StudentCourse {
 	private boolean isNotCompleted;
 	private boolean isFailed;
 	private boolean isDuplicate;
+	
+	
+	public String getCourseCode() {
+		return courseCode != null ? courseCode.trim(): null;
+	}
+	public String getCourseName() {
+		return courseName != null ? courseName.trim(): null; 
+	}	
+
+	public String getCourseLevel() {
+		return courseLevel != null ? courseLevel.trim(): null;
+	}
+	
+	public String getCourseDescription() {
+		return courseDescription != null ? courseDescription.trim(): null;
+	}
+
+	public String getCompletedCourseLetterGrade() {
+		return completedCourseLetterGrade != null ? completedCourseLetterGrade.trim(): null;
+	}
+
+	public String getInterimLetterGrade() {
+		return interimLetterGrade != null ? interimLetterGrade.trim(): null;
+	}
+
+	public String getRelatedCourse() {
+		return relatedCourse != null ? relatedCourse.trim(): null;
+	}
+
+	public String getRelatedLevel() {
+		return  relatedLevel != null ?  relatedLevel.trim(): null;
+	}
+
+	public Double getCompletedCoursePercentage() {
+		if(completedCoursePercentage == null) {
+			return Double.valueOf("0");
+		}
+		return completedCoursePercentage; 
+	}
 	
 	@Override
 	public String toString() {
