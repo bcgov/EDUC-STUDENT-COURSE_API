@@ -65,20 +65,21 @@ public class StudentCourseService {
         		}else {
         			sC.setHasRelatedCourse("N");
         		}
-        		
-        		if(sC.getCourseLevel().equalsIgnoreCase("   ")) {
-        			Course course = restTemplate.exchange(String.format(getCourseByCrseCodeOnlyURL,sC.getCourseCode()), HttpMethod.GET,
-            				new HttpEntity<>(httpHeaders), Course.class).getBody();
-            		if(course != null) {
-            			sC.setCourseName(course.getCourseName());
-            			sC.setGenericCourseType(course.getGenericCourseType());
-            		}
-        		}else {
-	        		Course course = restTemplate.exchange(String.format(getCourseByCrseCodeURL,sC.getCourseCode(),sC.getCourseLevel()), HttpMethod.GET,
-	        				new HttpEntity<>(httpHeaders), Course.class).getBody();
-	        		if(course != null) {
-	        			sC.setCourseName(course.getCourseName());
-	        			sC.setGenericCourseType(course.getGenericCourseType());
+        		if(sC.getCourseLevel() != null) {
+	        		if(sC.getCourseLevel().trim().equalsIgnoreCase("")) {
+	        			Course course = restTemplate.exchange(String.format(getCourseByCrseCodeOnlyURL,sC.getCourseCode()), HttpMethod.GET,
+	            				new HttpEntity<>(httpHeaders), Course.class).getBody();
+	            		if(course != null) {
+	            			sC.setCourseName(course.getCourseName());
+		        			sC.setGenericCourseType(course.getGenericCourseType());
+	            		}
+	        		}else {
+		        		Course course = restTemplate.exchange(String.format(getCourseByCrseCodeURL,sC.getCourseCode(),sC.getCourseLevel()), HttpMethod.GET,
+		        				new HttpEntity<>(httpHeaders), Course.class).getBody();
+		        		if(course != null) {
+		        			sC.setCourseName(course.getCourseName());
+		        			sC.setGenericCourseType(course.getGenericCourseType());
+		        		}
 	        		}
         		}
         	});
