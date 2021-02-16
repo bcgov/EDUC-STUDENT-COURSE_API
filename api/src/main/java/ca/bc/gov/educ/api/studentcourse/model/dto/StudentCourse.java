@@ -20,7 +20,7 @@ public class StudentCourse {
 	private Double interimPercent;
 	private String interimLetterGrade;
 	private Integer credits;
-	private String creditsUsedForGrad;	
+	private Integer creditsUsedForGrad;	
 	private String relatedCourse;
 	private String relatedLevel;
 	private String hasRelatedCourse;
