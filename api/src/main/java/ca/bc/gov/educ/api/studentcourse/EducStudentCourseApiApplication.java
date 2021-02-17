@@ -31,12 +31,8 @@ public class EducStudentCourseApiApplication {
 	public ModelMapper modelMapper() {
 
 		ModelMapper modelMapper = new ModelMapper();
-		modelMapper.typeMap(StudentCourseEntity.class, StudentCourse.class).addMappings(mp -> {
-		    mp.skip(StudentCourse::setCreditsUsedForGrad);
-		});
-		modelMapper.typeMap(StudentCourse.class, StudentCourseEntity.class).addMappings(mp -> {
-		    mp.skip(StudentCourseEntity::setCreditsUsedForGrad);
-		});
+		modelMapper.typeMap(StudentCourseEntity.class, StudentCourse.class);
+		modelMapper.typeMap(StudentCourse.class, StudentCourseEntity.class);
 
 		return modelMapper;
 	}

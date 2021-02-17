@@ -18,9 +18,6 @@ public class StudentCourseEntity {
 	@EmbeddedId
     private StudentCourseId courseKey;
     
-    @Column(name = "STUDY_TYPE", nullable = true)
-    private String gradReqMet;    
-    
     @Column(name = "FINAL_PCT", nullable = true)
     private Double completedCoursePercentage;
 
@@ -36,9 +33,6 @@ public class StudentCourseEntity {
     @Column(name = "NUM_CREDITS", nullable = true)
     private Integer credits;
     
-    @Column(name = "USED_FOR_GRAD", nullable = true)
-    private String creditsUsedForGrad;    
-
     @Column(name = "CRSE_TYPE", nullable = true)
     private String courseType;
     

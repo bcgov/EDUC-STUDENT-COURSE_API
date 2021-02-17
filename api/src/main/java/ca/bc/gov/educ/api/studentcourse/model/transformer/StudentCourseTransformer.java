@@ -45,7 +45,6 @@ public class StudentCourseTransformer {
             courseAchievement.setCourseCode(courseAchievementEntity.getCourseKey().getCourseCode());
             courseAchievement.setCourseLevel(courseAchievementEntity.getCourseKey().getCourseLevel());
             courseAchievement.setSessionDate(StudentCourseApiUtils.parseTraxDate(courseAchievementEntity.getCourseKey().getSessionDate()));
-            courseAchievement.setCreditsUsedForGrad(courseAchievementEntity.getCreditsUsedForGrad() != null && !courseAchievementEntity.getCreditsUsedForGrad().trim().equals("") && !courseAchievementEntity.getCreditsUsedForGrad().trim().equals("R") ? Integer.parseInt(courseAchievementEntity.getCreditsUsedForGrad()) : new Integer(0));
             courseAchievementList.add(courseAchievement);
         }
 
