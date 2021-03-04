@@ -51,7 +51,7 @@ public class StudentCourseController {
     	String accessToken = auth.getTokenValue();
     	List<StudentCourse> studentCourseList = studentCourseService.getStudentCourseList(pen,accessToken);
         if(studentCourseList.isEmpty()) {
-        	return response.NOT_FOUND();
+        	return response.NO_CONTENT();
         }
     	return response.GET(studentCourseList);
     }
