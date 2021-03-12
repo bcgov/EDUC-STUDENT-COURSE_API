@@ -25,6 +25,7 @@ public class StudentCourse {
 	private String relatedLevel;
 	private String hasRelatedCourse;
 	private String genericCourseType;
+	private String language;
 	private boolean isNotCompleted;
 	private boolean isFailed;
 	private boolean isDuplicate;
