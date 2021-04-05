@@ -12,7 +12,7 @@ import lombok.Data;
 @Data
 @Immutable
 @Entity
-@Table(name = "STUD_XCRSE")
+@Table(name = "TRAX_STUDENT_COURSES")
 public class StudentCourseEntity {
    
 	@EmbeddedId
@@ -33,7 +33,7 @@ public class StudentCourseEntity {
     @Column(name = "NUM_CREDITS", nullable = true)
     private Integer credits;
     
-    @Column(name = "CRSE_TYPE", nullable = true)
+    @Column(name = "EQUIV_OR_CHALLENGE", nullable = true)
     private String courseType;
     
     @Column(name = "RELATED_CRSE", nullable = true)
@@ -41,4 +41,7 @@ public class StudentCourseEntity {
     
     @Column(name = "RELATED_LEVEL", nullable = true)
     private String relatedLevel;  
+    
+    @Column(name = "CRSE_DESCRIPTION", nullable = true)
+    private String courseDescription; 
 }
