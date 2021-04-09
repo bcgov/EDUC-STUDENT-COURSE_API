@@ -60,7 +60,8 @@ public class StudentCourseService {
         try {
         	studentCourses = studentCourseTransformer.transformToDTO(studentCourseRepo.findByPen(pen));
         	studentCourses.forEach(sC -> {
-        		if(StringUtils.isNotBlank(sC.getRelatedCourse()) || StringUtils.isNotBlank(sC.getRelatedLevel()) || StringUtils.isNotBlank(sC.getCourseDescription())) {
+        		if(StringUtils.isNotBlank(sC.getRelatedCourse()) || StringUtils.isNotBlank(sC.getRelatedLevel()) || StringUtils.isNotBlank(sC.getCourseDescription()) 
+        				|| StringUtils.isNotBlank(sC.getBestSchoolPercent().toString()) || StringUtils.isNotBlank(sC.getBestExamPercent().toString()) || StringUtils.isNotBlank(sC.getMetLitNumRequirement())) {
         			sC.setHasRelatedCourse("Y");
         		}else {
         			sC.setHasRelatedCourse("N");
@@ -83,6 +84,23 @@ public class StudentCourseService {
 		        			sC.setGenericCourseType(course.getGenericCourseType());
 		        			sC.setLanguage(course.getLanguage());
 		        			sC.setWorkExpFlag(course.getWorkExpFlag());
+		        		}
+	        		}
+        		}
+        		if(StringUtils.isNotBlank(sC.getRelatedCourse()) || StringUtils.isNotBlank(sC.getRelatedLevel())) {
+	        		if(sC.getRelatedLevel() != null) {
+		        		if(sC.getRelatedLevel().trim().equalsIgnoreCase("")) {
+		        			Course course = restTemplate.exchange(String.format(getCourseByCrseCodeOnlyURL,sC.getRelatedCourse()), HttpMethod.GET,
+		            				new HttpEntity<>(httpHeaders), Course.class).getBody();
+		            		if(course != null) {
+		            			sC.setRelatedCourseName(course.getCourseName());
+		            		}
+		        		}else {
+			        		Course course = restTemplate.exchange(String.format(getCourseByCrseCodeURL,sC.getRelatedCourse(),sC.getRelatedLevel()), HttpMethod.GET,
+			        				new HttpEntity<>(httpHeaders), Course.class).getBody();
+			        		if(course != null) {
+			        			sC.setRelatedCourseName(course.getCourseName());
+			        		}
 		        		}
 	        		}
         		}

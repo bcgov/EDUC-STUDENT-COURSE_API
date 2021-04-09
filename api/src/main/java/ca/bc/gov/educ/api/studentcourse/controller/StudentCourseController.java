@@ -22,14 +22,17 @@ import ca.bc.gov.educ.api.studentcourse.util.GradValidation;
 import ca.bc.gov.educ.api.studentcourse.util.ResponseHelper;
 import ca.bc.gov.educ.api.studentcourse.util.StudentCourseApiConstants;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.info.Info;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
 @CrossOrigin
 @RestController
 @RequestMapping(StudentCourseApiConstants.STUDENT_COURSE_API_ROOT_MAPPING)
 @EnableResourceServer
-@OpenAPIDefinition(info = @Info(title = "API for Student Course Data.", description = "This Read API is for Reading Student Course data.", version = "1"), security = {@SecurityRequirement(name = "OAUTH2", scopes = {"READ_GRAD_STUDENT_COURSE_DATA"})})
+@OpenAPIDefinition(info = @Info(title = "API for Student Course Data.", description = "This API is for Reading Student Course data.", version = "1"), security = {@SecurityRequirement(name = "OAUTH2", scopes = {"READ_GRAD_STUDENT_COURSE_DATA"})})
 public class StudentCourseController {
 
     private static Logger logger = LoggerFactory.getLogger(StudentCourseController.class);
@@ -45,6 +48,8 @@ public class StudentCourseController {
 
     @GetMapping(StudentCourseApiConstants.GET_STUDENT_COURSE_BY_PEN_MAPPING)
     @PreAuthorize("#oauth2.hasScope('READ_GRAD_STUDENT_COURSE_DATA')")
+    @Operation(summary = "Find All Student Courses by PEN", description = "Get All Student Courses by PEN", tags = { "Student Courses" })
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "OK"), @ApiResponse(responseCode = "204", description = "NO CONTENT")})
     public ResponseEntity<List<StudentCourse>> getStudentCourseByPEN(@PathVariable String pen) {
         logger.debug("#Get All Student Course by PEN: " + pen);
         OAuth2AuthenticationDetails auth = (OAuth2AuthenticationDetails) SecurityContextHolder.getContext().getAuthentication().getDetails(); 
