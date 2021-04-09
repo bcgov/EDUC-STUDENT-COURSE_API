@@ -19,9 +19,13 @@ public class StudentCourse {
 	private String completedCourseLetterGrade;
 	private Double interimPercent;
 	private String interimLetterGrade;
+	private Double bestSchoolPercent; 
+    private Double bestExamPercent;  
+    private String metLitNumRequirement; 
 	private Integer credits;
 	private Integer creditsUsedForGrad;	
 	private String relatedCourse;
+	private String relatedCourseName;
 	private String relatedLevel;
 	private String hasRelatedCourse;
 	private String genericCourseType;

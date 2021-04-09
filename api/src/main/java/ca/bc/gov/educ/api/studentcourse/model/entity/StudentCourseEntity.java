@@ -44,4 +44,13 @@ public class StudentCourseEntity {
     
     @Column(name = "CRSE_DESCRIPTION", nullable = true)
     private String courseDescription; 
+    
+    @Column(name = "BEST_SCHOOL_PCT", nullable = true)
+    private Double bestSchoolPercent; 
+    
+    @Column(name = "BEST_EXAM_PCT", nullable = true)
+    private Double bestExamPercent;  
+    
+    @Column(name = "MET_LIT_NUM_REQT", nullable = true)
+    private String metLitNumRequirement; 
 }
