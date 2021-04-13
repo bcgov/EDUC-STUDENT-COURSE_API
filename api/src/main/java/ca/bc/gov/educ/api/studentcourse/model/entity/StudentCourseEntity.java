@@ -42,8 +42,8 @@ public class StudentCourseEntity {
     @Column(name = "RELATED_LEVEL", nullable = true)
     private String relatedLevel;  
     
-    @Column(name = "CRSE_DESCRIPTION", nullable = true)
-    private String courseDescription; 
+    @Column(name = "ALTERNATE_CRSE_NAME", nullable = true)
+    private String alternateCourseName; 
     
     @Column(name = "BEST_SCHOOL_PCT", nullable = true)
     private Double bestSchoolPercent; 

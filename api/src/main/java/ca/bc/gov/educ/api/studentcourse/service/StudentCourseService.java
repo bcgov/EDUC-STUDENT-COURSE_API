@@ -60,7 +60,7 @@ public class StudentCourseService {
         try {
         	studentCourses = studentCourseTransformer.transformToDTO(studentCourseRepo.findByPen(pen));
         	studentCourses.forEach(sC -> {
-        		if(StringUtils.isNotBlank(sC.getRelatedCourse()) || StringUtils.isNotBlank(sC.getRelatedLevel()) || StringUtils.isNotBlank(sC.getCourseDescription()) 
+        		if(StringUtils.isNotBlank(sC.getRelatedCourse()) || StringUtils.isNotBlank(sC.getRelatedLevel()) || StringUtils.isNotBlank(sC.getAlternateCourseName()) 
         				|| StringUtils.isNotBlank(sC.getBestSchoolPercent() != null ?sC.getBestSchoolPercent().toString():null) || StringUtils.isNotBlank(sC.getBestExamPercent() != null ?sC.getBestExamPercent().toString():null) || StringUtils.isNotBlank(sC.getMetLitNumRequirement())) {
         			sC.setHasRelatedCourse("Y");
         		}else {
