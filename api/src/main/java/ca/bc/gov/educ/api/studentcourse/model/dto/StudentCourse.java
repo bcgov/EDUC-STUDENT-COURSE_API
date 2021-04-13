@@ -13,7 +13,7 @@ public class StudentCourse {
     private String courseName;
     private String courseLevel;
     private String sessionDate;
-	private String courseDescription;
+	private String alternateCourseName;
 	private String gradReqMet;
 	private Double completedCoursePercentage;
 	private String completedCourseLetterGrade;
@@ -47,8 +47,8 @@ public class StudentCourse {
 		return courseLevel != null ? courseLevel.trim(): null;
 	}
 	
-	public String getCourseDescription() {
-		return courseDescription != null ? courseDescription.trim(): null;
+	public String getAlternateCourseName() {
+		return alternateCourseName != null ? alternateCourseName.trim(): null;
 	}
 
 	public String getCompletedCourseLetterGrade() {
@@ -81,8 +81,8 @@ public class StudentCourse {
 	@Override
 	public String toString() {
 		return "StudentCourse [pen=" + pen + ", courseCode=" + courseCode + ", courseName=" + courseName
-				+ ", courseLevel=" + courseLevel + ", sessionDate=" + sessionDate + ", courseDescription="
-				+ courseDescription + ", gradReqMet=" + gradReqMet + ", completedCoursePercentage="
+				+ ", courseLevel=" + courseLevel + ", sessionDate=" + sessionDate + ", alternateCourseName="
+				+ alternateCourseName + ", gradReqMet=" + gradReqMet + ", completedCoursePercentage="
 				+ completedCoursePercentage + ", completedCourseLetterGrade=" + completedCourseLetterGrade
 				+ ", interimPercent=" + interimPercent + ", interimLetterGrade=" + interimLetterGrade + ", credits="
 				+ credits + ", creditsUsedForGrad=" + creditsUsedForGrad + ", relatedCourse=" + relatedCourse
