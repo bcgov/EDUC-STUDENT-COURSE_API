@@ -35,6 +35,9 @@ public class StudentCourse {
 	private boolean isFailed;
 	private boolean isDuplicate;
 	
+	private String getPen() {
+    	return pen != null ? pen.trim():null;
+    }
 	
 	public String getCourseCode() {
 		return courseCode != null ? courseCode.trim(): null;
