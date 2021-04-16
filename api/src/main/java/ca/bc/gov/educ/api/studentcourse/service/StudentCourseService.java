@@ -75,6 +75,7 @@ public class StudentCourseService {
 		        			sC.setGenericCourseType(course.getGenericCourseType());
 		        			sC.setLanguage(course.getLanguage());
 		        			sC.setWorkExpFlag(course.getWorkExpFlag());
+		        			sC.setCourseDetails(course);
 	            		}
 	        		}else {
 		        		Course course = restTemplate.exchange(String.format(getCourseByCrseCodeURL,sC.getCourseCode(),sC.getCourseLevel()), HttpMethod.GET,
@@ -84,6 +85,7 @@ public class StudentCourseService {
 		        			sC.setGenericCourseType(course.getGenericCourseType());
 		        			sC.setLanguage(course.getLanguage());
 		        			sC.setWorkExpFlag(course.getWorkExpFlag());
+		        			sC.setCourseDetails(course);
 		        		}
 	        		}
         		}
