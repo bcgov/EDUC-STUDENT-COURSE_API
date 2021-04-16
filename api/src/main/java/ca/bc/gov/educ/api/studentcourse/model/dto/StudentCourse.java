@@ -34,6 +34,7 @@ public class StudentCourse {
 	private boolean isNotCompleted;
 	private boolean isFailed;
 	private boolean isDuplicate;
+	private Course courseDetails;
 	
 	public String getPen() {
     	return pen != null ? pen.trim():null;
