@@ -50,11 +50,12 @@ public class StudentCourseService {
      /**
      * Get all student courses by PEN populated in Student Course DTO
      * @param accessToken 
+     * @param sortForUI 
      *
      * @return Student Course 
      * @throws java.lang.Exception
      */
-    public List<StudentCourse> getStudentCourseList(String pen, String accessToken) {
+    public List<StudentCourse> getStudentCourseList(String pen, String accessToken, boolean sortForUI) {
         List<StudentCourse> studentCourses  = new ArrayList<StudentCourse>();
         HttpHeaders httpHeaders = StudentCourseApiUtils.getHeaders(accessToken);
         try {
@@ -110,11 +111,19 @@ public class StudentCourseService {
         } catch (Exception e) {
             logger.debug("Exception:" + e);
         }
-        Collections.sort(studentCourses, Comparator.comparing(StudentCourse::getPen)
+        if(sortForUI) {
+        	Collections.sort(studentCourses, Comparator.comparing(StudentCourse::getPen)
+                .thenComparing(StudentCourse::getCourseCode)
+                .thenComparing(StudentCourse::getCourseLevel)
+                .thenComparing(StudentCourse::getSessionDate)
+                .reversed());
+        }else {
+        	Collections.sort(studentCourses, Comparator.comparing(StudentCourse::getPen)
                 .thenComparing(StudentCourse::getCompletedCoursePercentage)
                 .thenComparing(StudentCourse::getCredits)
                 .thenComparing(StudentCourse::getCourseLevel)
                 .reversed());
+        }
         return studentCourses;
     }
 }
