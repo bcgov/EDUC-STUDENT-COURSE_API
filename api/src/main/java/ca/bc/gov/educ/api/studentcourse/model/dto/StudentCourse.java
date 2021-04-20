@@ -21,6 +21,8 @@ public class StudentCourse {
 	private String interimLetterGrade;
 	private Double bestSchoolPercent; 
     private Double bestExamPercent;  
+    private String equivOrChallenge;
+    private String fineArtsAppliedSkills;    
     private String metLitNumRequirement; 
 	private Integer credits;
 	private Integer creditsUsedForGrad;	

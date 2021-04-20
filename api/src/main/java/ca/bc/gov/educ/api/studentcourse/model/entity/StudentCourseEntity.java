@@ -34,7 +34,10 @@ public class StudentCourseEntity {
     private Integer credits;
     
     @Column(name = "EQUIV_OR_CHALLENGE", nullable = true)
-    private String courseType;
+    private String equivOrChallenge;
+    
+    @Column(name = "FINE_ARTS_APPLIED_SKILLS", nullable = true)
+    private String fineArtsAppliedSkills;    
     
     @Column(name = "RELATED_CRSE", nullable = true)
     private String relatedCourse; 
