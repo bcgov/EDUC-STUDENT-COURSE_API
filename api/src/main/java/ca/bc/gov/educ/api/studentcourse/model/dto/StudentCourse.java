@@ -83,6 +83,18 @@ public class StudentCourse {
 		}
 		return completedCoursePercentage; 
 	}
+
+    public String getEquivOrChallenge() {
+    	return equivOrChallenge != null ? equivOrChallenge.trim() : null;
+    }
+    
+    public String getFineArtsAppliedSkills() {
+    	return fineArtsAppliedSkills != null ? fineArtsAppliedSkills.trim() : null;
+    }
+    
+    public String getMetLitNumRequirement() {
+    	return metLitNumRequirement != null ? metLitNumRequirement.trim() : null;
+    }
 	
 	@Override
 	public String toString() {
