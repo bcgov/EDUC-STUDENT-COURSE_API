@@ -90,12 +90,12 @@ public class StudentCourseService {
         		if(StringUtils.isNotBlank(sC.getRelatedCourse()) || StringUtils.isNotBlank(sC.getRelatedLevel())) {
 	        		if(sC.getRelatedLevel() != null) {
 		        		if(sC.getRelatedLevel().trim().equalsIgnoreCase("")) {
-		        			Course course = webClient.get().uri(String.format(getCourseByCrseCodeOnlyURL,sC.getCourseCode())).headers(h -> h.setBearerAuth(accessToken)).retrieve().bodyToMono(Course.class).block();
+		        			Course course = webClient.get().uri(String.format(getCourseByCrseCodeOnlyURL,sC.getRelatedCourse())).headers(h -> h.setBearerAuth(accessToken)).retrieve().bodyToMono(Course.class).block();
 		            		if(course != null) {
 		            			sC.setRelatedCourseName(course.getCourseName());
 		            		}
 		        		}else {
-		        			Course course = webClient.get().uri(String.format(getCourseByCrseCodeURL,sC.getCourseCode(),sC.getCourseLevel())).headers(h -> h.setBearerAuth(accessToken)).retrieve().bodyToMono(Course.class).block();
+		        			Course course = webClient.get().uri(String.format(getCourseByCrseCodeURL,sC.getRelatedCourse(),sC.getRelatedLevel())).headers(h -> h.setBearerAuth(accessToken)).retrieve().bodyToMono(Course.class).block();
 			        		if(course != null) {
 			        			sC.setRelatedCourseName(course.getCourseName());
 			        		}
