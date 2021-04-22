@@ -18,6 +18,7 @@ public class Course {
     private Date endDate;
     private String workExpFlag;    
     private String genericCourseType;
+    private String coRegID;
     
     public String getCourseName() {
 		return courseName != null ? courseName.trim(): null; 
