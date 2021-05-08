@@ -11,7 +11,7 @@ spring:
     enabled: false
   datasource:
     hikari:
-      pool-name: ruleengine-api-cp
+      pool-name: student-course-api-cp
       maximum-pool-size: ${MAXIMUM_POOL_SIZE}
       connection-timeout: ${CONNECTION_TIMEOUT}
       max-lifetime: ${MAX_LIFETIME}
@@ -29,10 +29,6 @@ spring:
   jackson:
     deserialization:
       fail-on-unknown-properties: false
-  security:
-    user:
-      name: ${API_USERNAME}
-      password: ${API_PASSWORD}
 
 #Logging properties
 logging:
@@ -50,7 +46,7 @@ logging:
         gov:
           educ:
             api:
-              ruleengine: ${APP_LOG_LEVEL}
+              studentcourse: ${APP_LOG_LEVEL}
     org:
       springframework:
         web: ${SPRING_WEB_LOG_LEVEL}
@@ -67,10 +63,18 @@ server:
       io: 16
   #port: ${HTTP_PORT}
 
+#API Documentation
+springdoc:
+  api-docs:
+    path: /api/v1/api-docs
+  swagger-ui:
+    path: /api/v1/api-docs-ui.html
+    operationsSorter: method
+
 #EndPoint
-endpoint: 
-  course-api: 
-    course_by_crse_code: 
+endpoint:
+  course-api:
+    course_by_crse_code:
       url: https://grad-course-api-77c02f-dev.apps.silver.devops.gov.bc.ca/api/v1/course/%s/level/%s
-    course_by_crse_code_only: 
+    course_by_crse_code_only:
       url: https://grad-course-api-77c02f-dev.apps.silver.devops.gov.bc.ca/api/v1/course/%s
