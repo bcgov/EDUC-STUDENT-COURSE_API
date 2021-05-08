@@ -34,38 +34,40 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 @RestController
 @RequestMapping(StudentCourseApiConstants.STUDENT_COURSE_API_ROOT_MAPPING)
 @EnableResourceServer
-@OpenAPIDefinition(info = @Info(title = "API for Student Course Data.", description = "This API is for Reading Student Course data.", version = "1"), security = {@SecurityRequirement(name = "OAUTH2", scopes = {"READ_GRAD_STUDENT_COURSE_DATA"})})
+@OpenAPIDefinition(info = @Info(title = "API for Student Course Data.", description = "This API is for Reading Student Course data.", version = "1"),
+        security = {@SecurityRequirement(name = "OAUTH2", scopes = {"READ_GRAD_STUDENT_COURSE_DATA"})})
 public class StudentCourseController {
 
     private static Logger logger = LoggerFactory.getLogger(StudentCourseController.class);
 
     @Autowired
     StudentCourseService studentCourseService;
-    
+
     @Autowired
-	GradValidation validation;
-    
+    GradValidation validation;
+
     @Autowired
-	ResponseHelper response;
+    ResponseHelper response;
 
     @GetMapping(StudentCourseApiConstants.GET_STUDENT_COURSE_BY_PEN_MAPPING)
     @PreAuthorize("#oauth2.hasScope('READ_GRAD_STUDENT_COURSE_DATA')")
-    @Operation(summary = "Find All Student Courses by PEN", description = "Get All Student Courses by PEN", tags = { "Student Courses" })
+    @Operation(summary = "Find All Student Courses by PEN", description = "Get All Student Courses by PEN", tags = {"Student Courses"})
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "OK"), @ApiResponse(responseCode = "204", description = "NO CONTENT")})
-    public ResponseEntity<List<StudentCourse>> getStudentCourseByPEN(@PathVariable String pen, @RequestParam(value = "sortForUI",required = false,defaultValue = "false") boolean sortForUI) {
-        logger.debug("#Get All Student Course by PEN: " + pen);
+    public ResponseEntity<List<StudentCourse>> getStudentCourseByPEN(
+            @PathVariable String pen, @RequestParam(value = "sortForUI", required = false, defaultValue = "false") boolean sortForUI) {
+        logger.debug("#Get All Student Course by PEN: *****" + pen.substring(5));
         validation.requiredField(pen, "Pen");
-        if(validation.hasErrors()) {
-        	validation.stopOnErrors();
-    		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }else {
-        	OAuth2AuthenticationDetails auth = (OAuth2AuthenticationDetails) SecurityContextHolder.getContext().getAuthentication().getDetails(); 
-	    	String accessToken = auth.getTokenValue();
-	    	List<StudentCourse> studentCourseList = studentCourseService.getStudentCourseList(pen,accessToken,sortForUI);
-	        if(studentCourseList.isEmpty()) {
-	        	return response.NO_CONTENT();
-	        }
-	    	return response.GET(studentCourseList);
+        if (validation.hasErrors()) {
+            validation.stopOnErrors();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        } else {
+            OAuth2AuthenticationDetails auth = (OAuth2AuthenticationDetails) SecurityContextHolder.getContext().getAuthentication().getDetails();
+            String accessToken = auth.getTokenValue();
+            List<StudentCourse> studentCourseList = studentCourseService.getStudentCourseList(pen, accessToken, sortForUI);
+            if (studentCourseList.isEmpty()) {
+                return response.NO_CONTENT();
+            }
+            return response.GET(studentCourseList);
         }
     }
 }
