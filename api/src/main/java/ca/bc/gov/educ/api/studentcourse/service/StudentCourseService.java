@@ -56,7 +56,7 @@ public class StudentCourseService {
      * @throws java.lang.Exception
      */
     public List<StudentCourse> getStudentCourseList(String pen, String accessToken, boolean sortForUI) {
-        List<StudentCourse> studentCourses  = new ArrayList<StudentCourse>();
+        List<StudentCourse> studentCourses  = new ArrayList<>();
         try {
         	studentCourses = studentCourseTransformer.transformToDTO(studentCourseRepo.findByPen(pen));
         	studentCourses.forEach(sC -> {
@@ -68,55 +68,68 @@ public class StudentCourseService {
         		}
         		if(sC.getCourseLevel() != null) {
 	        		if(sC.getCourseLevel().trim().equalsIgnoreCase("")) {
-	        			Course course = webClient.get().uri(String.format(getCourseByCrseCodeOnlyURL,sC.getCourseCode())).headers(h -> h.setBearerAuth(accessToken)).retrieve().bodyToMono(Course.class).block();
-	            		if(course != null) {
-	            			sC.setCourseName(course.getCourseName());
-		        			sC.setGenericCourseType(course.getGenericCourseType());
-		        			sC.setLanguage(course.getLanguage());
-		        			sC.setWorkExpFlag(course.getWorkExpFlag());
-		        			sC.setCourseDetails(course);
-	            		}
+	        			getCourseDetails(sC.getCourseCode(),accessToken,sC);	            		
 	        		}else {
-	        			Course course = webClient.get().uri(String.format(getCourseByCrseCodeURL,sC.getCourseCode(),sC.getCourseLevel())).headers(h -> h.setBearerAuth(accessToken)).retrieve().bodyToMono(Course.class).block();
-		        		if(course != null) {
-		        			sC.setCourseName(course.getCourseName());
-		        			sC.setGenericCourseType(course.getGenericCourseType());
-		        			sC.setLanguage(course.getLanguage());
-		        			sC.setWorkExpFlag(course.getWorkExpFlag());
-		        			sC.setCourseDetails(course);
-		        		}
+	        			getCourseDetailsByLevel(sC.getCourseCode(), sC.getCourseLevel(), accessToken,sC);
 	        		}
         		}
-        		if(StringUtils.isNotBlank(sC.getRelatedCourse()) || StringUtils.isNotBlank(sC.getRelatedLevel())) {
-	        		if(sC.getRelatedLevel() != null) {
-		        		if(sC.getRelatedLevel().trim().equalsIgnoreCase("")) {
-		        			Course course = webClient.get().uri(String.format(getCourseByCrseCodeOnlyURL,sC.getRelatedCourse())).headers(h -> h.setBearerAuth(accessToken)).retrieve().bodyToMono(Course.class).block();
-		            		if(course != null) {
-		            			sC.setRelatedCourseName(course.getCourseName());
-		            		}
-		        		}else {
-		        			Course course = webClient.get().uri(String.format(getCourseByCrseCodeURL,sC.getRelatedCourse(),sC.getRelatedLevel())).headers(h -> h.setBearerAuth(accessToken)).retrieve().bodyToMono(Course.class).block();
-			        		if(course != null) {
-			        			sC.setRelatedCourseName(course.getCourseName());
-			        		}
-		        		}
-	        		}
+        		if((StringUtils.isNotBlank(sC.getRelatedCourse()) || StringUtils.isNotBlank(sC.getRelatedLevel())) && sC.getRelatedLevel() != null) {
+        			checkForMoreOptions(sC,accessToken);
         		}
         	});
         } catch (Exception e) {
-            logger.debug("Exception:" + e);
+            logger.debug(String.format("Exception: %s",e));
         }
-        if(sortForUI) {
+        getDataSorted(studentCourses,sortForUI);
+        return studentCourses;
+    }
+    
+    private void checkForMoreOptions(StudentCourse sC, String accessToken) {
+    	if(sC.getRelatedLevel().trim().equalsIgnoreCase("")) {
+			Course course = webClient.get().uri(String.format(getCourseByCrseCodeOnlyURL,sC.getRelatedCourse())).headers(h -> h.setBearerAuth(accessToken)).retrieve().bodyToMono(Course.class).block();
+    		if(course != null) {
+    			sC.setRelatedCourseName(course.getCourseName());
+    		}
+		}else {
+			Course course = webClient.get().uri(String.format(getCourseByCrseCodeURL,sC.getRelatedCourse(),sC.getRelatedLevel())).headers(h -> h.setBearerAuth(accessToken)).retrieve().bodyToMono(Course.class).block();
+    		if(course != null) {
+    			sC.setRelatedCourseName(course.getCourseName());
+    		}
+		}		
+	}
+    
+    private void getDataSorted(List<StudentCourse> studentCourses, boolean sortForUI) {
+    	if(sortForUI) {
         	Collections.sort(studentCourses, Comparator.comparing(StudentCourse::getPen)
                 .thenComparing(StudentCourse::getCourseCode)
                 .thenComparing(StudentCourse::getCourseLevel)
                 .thenComparing(StudentCourse::getSessionDate));
         }else {
         	Collections.sort(studentCourses, Comparator.comparing(StudentCourse::getPen)
-                .thenComparing(StudentCourse::getCompletedCoursePercentage)
-                .thenComparing(StudentCourse::getCredits)
-                .thenComparing(StudentCourse::getCourseLevel));
+                .thenComparing(StudentCourse::getCompletedCoursePercentage).reversed()
+                .thenComparing(StudentCourse::getCredits).reversed()
+                .thenComparing(StudentCourse::getCourseLevel).reversed());
         }
-        return studentCourses;
+    }
+
+	private void getCourseDetails(String courseCode,String accessToken, StudentCourse sC) {
+    	Course course = webClient.get().uri(String.format(getCourseByCrseCodeOnlyURL,courseCode)).headers(h -> h.setBearerAuth(accessToken)).retrieve().bodyToMono(Course.class).block();
+    	if(course != null) {
+			sC.setCourseName(course.getCourseName());
+			sC.setGenericCourseType(course.getGenericCourseType());
+			sC.setLanguage(course.getLanguage());
+			sC.setWorkExpFlag(course.getWorkExpFlag());
+			sC.setCourseDetails(course);
+		}
+    }
+    private void getCourseDetailsByLevel(String courseCode,String courseLevel,String accessToken, StudentCourse sC) {
+    	Course course = webClient.get().uri(String.format(getCourseByCrseCodeURL,courseCode,courseLevel)).headers(h -> h.setBearerAuth(accessToken)).retrieve().bodyToMono(Course.class).block();
+    	if(course != null) {
+			sC.setCourseName(course.getCourseName());
+			sC.setGenericCourseType(course.getGenericCourseType());
+			sC.setLanguage(course.getLanguage());
+			sC.setWorkExpFlag(course.getWorkExpFlag());
+			sC.setCourseDetails(course);
+		}
     }
 }
