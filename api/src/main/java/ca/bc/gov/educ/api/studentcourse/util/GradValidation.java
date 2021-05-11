@@ -10,6 +10,8 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
 
+import ca.bc.gov.educ.api.studentcourse.exception.GradBusinessRuleException;
+
 @Service
 @Scope(proxyMode = ScopedProxyMode.DEFAULT)
 public class GradValidation {
