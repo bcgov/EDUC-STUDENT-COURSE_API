@@ -38,7 +38,7 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
         security = {@SecurityRequirement(name = "OAUTH2", scopes = {"READ_GRAD_STUDENT_COURSE_DATA"})})
 public class StudentCourseController {
 
-    private static Logger logger = LoggerFactory.getLogger(StudentCourseController.class);
+    private static final Logger logger = LoggerFactory.getLogger(StudentCourseController.class);
 
     @Autowired
     StudentCourseService studentCourseService;
