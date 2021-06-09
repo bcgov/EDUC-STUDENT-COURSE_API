@@ -1,6 +1,5 @@
 package ca.bc.gov.educ.api.studentcourse.service;
 
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -9,51 +8,38 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import ca.bc.gov.educ.api.studentcourse.model.dto.Course;
 import ca.bc.gov.educ.api.studentcourse.model.dto.StudentCourse;
-import ca.bc.gov.educ.api.studentcourse.model.entity.StudentCourseEntity;
 import ca.bc.gov.educ.api.studentcourse.model.transformer.StudentCourseTransformer;
 import ca.bc.gov.educ.api.studentcourse.repository.StudentCourseRepository;
 import ca.bc.gov.educ.api.studentcourse.util.StudentCourseApiConstants;
 
 @Service
 public class StudentCourseService {
+    private static final Logger logger = LoggerFactory.getLogger(StudentCourseService.class);
 
-    @Autowired
-    private StudentCourseRepository studentCourseRepo;
+    private final StudentCourseRepository studentCourseRepo;
+    private final StudentCourseTransformer studentCourseTransformer;
+    private final StudentCourseApiConstants constants;
+    private final WebClient webClient;
 
-    Iterable<StudentCourseEntity> studentCourseEntities;
-
-    @Autowired
-    private StudentCourseTransformer studentCourseTransformer;
-
-    @Value(StudentCourseApiConstants.ENDPOINT_COURSE_BY_CRSE_CODE_URL)
-    private String getCourseByCrseCodeURL;
-
-    @Value(StudentCourseApiConstants.ENDPOINT_COURSE_BY_CRSE_CODE_ONLY)
-    private String getCourseByCrseCodeOnlyURL;
-
-    @Autowired
-    RestTemplate restTemplate;
-
-    @Autowired
-    WebClient webClient;
-
-    private static Logger logger = LoggerFactory.getLogger(StudentCourseService.class);
+    public StudentCourseService(StudentCourseRepository studentCourseRepo, StudentCourseTransformer studentCourseTransformer, StudentCourseApiConstants constants, WebClient webClient) {
+        this.studentCourseRepo = studentCourseRepo;
+        this.studentCourseTransformer = studentCourseTransformer;
+        this.constants = constants;
+        this.webClient = webClient;
+    }
 
     /**
      * Get all student courses by PEN populated in Student Course DTO
      *
-     * @param accessToken
-     * @param sortForUI
+     * @param pen           PEN #
+     * @param accessToken   Access Token
+     * @param sortForUI     Sort For UI
      * @return Student Course
-     * @throws java.lang.Exception
      */
     public List<StudentCourse> getStudentCourseList(String pen, String accessToken, boolean sortForUI) {
         List<StudentCourse> studentCourses  = new ArrayList<>();
@@ -85,17 +71,17 @@ public class StudentCourseService {
     }
     
     private void checkForMoreOptions(StudentCourse sC, String accessToken) {
-    	if(sC.getRelatedLevel().trim().equalsIgnoreCase("")) {
-        Course course = webClient.get().uri(String.format(getCourseByCrseCodeOnlyURL,sC.getRelatedCourse())).headers(h -> h.setBearerAuth(accessToken)).retrieve().bodyToMono(Course.class).block();
-          if(course != null) {
-            sC.setRelatedCourseName(course.getCourseName());
-          }
-      }else {
-        Course course = webClient.get().uri(String.format(getCourseByCrseCodeURL,sC.getRelatedCourse(),sC.getRelatedLevel())).headers(h -> h.setBearerAuth(accessToken)).retrieve().bodyToMono(Course.class).block();
-          if(course != null) {
-            sC.setRelatedCourseName(course.getCourseName());
-          }
-      }		
+		if(sC.getRelatedLevel().trim().equalsIgnoreCase("")) {
+			Course course = webClient.get().uri(String.format(constants.getCourseByCourseCodeOnlyUrl(),sC.getRelatedCourse())).headers(h -> h.setBearerAuth(accessToken)).retrieve().bodyToMono(Course.class).block();
+			if(course != null) {
+				sC.setRelatedCourseName(course.getCourseName());
+			}
+		} else {
+			Course course = webClient.get().uri(String.format(constants.getCourseByCourseCodeUrl(),sC.getRelatedCourse(),sC.getRelatedLevel())).headers(h -> h.setBearerAuth(accessToken)).retrieve().bodyToMono(Course.class).block();
+			if(course != null) {
+				sC.setRelatedCourseName(course.getCourseName());
+			}
+		}
 	 }
     
     private void getDataSorted(List<StudentCourse> studentCourses, boolean sortForUI) {
@@ -113,7 +99,7 @@ public class StudentCourseService {
     }
 
 	private void getCourseDetails(String courseCode,String accessToken, StudentCourse sC) {
-    	Course course = webClient.get().uri(String.format(getCourseByCrseCodeOnlyURL,courseCode)).headers(h -> h.setBearerAuth(accessToken)).retrieve().bodyToMono(Course.class).block();
+    	Course course = webClient.get().uri(String.format(constants.getCourseByCourseCodeOnlyUrl(),courseCode)).headers(h -> h.setBearerAuth(accessToken)).retrieve().bodyToMono(Course.class).block();
     	if(course != null) {
 			sC.setCourseName(course.getCourseName());
 			sC.setGenericCourseType(course.getGenericCourseType());
@@ -123,7 +109,7 @@ public class StudentCourseService {
 		  }
     }
     private void getCourseDetailsByLevel(String courseCode,String courseLevel,String accessToken, StudentCourse sC) {
-    	Course course = webClient.get().uri(String.format(getCourseByCrseCodeURL,courseCode,courseLevel)).headers(h -> h.setBearerAuth(accessToken)).retrieve().bodyToMono(Course.class).block();
+    	Course course = webClient.get().uri(String.format(constants.getCourseByCourseCodeUrl(),courseCode,courseLevel)).headers(h -> h.setBearerAuth(accessToken)).retrieve().bodyToMono(Course.class).block();
     	if(course != null) {
 			sC.setCourseName(course.getCourseName());
 			sC.setGenericCourseType(course.getGenericCourseType());

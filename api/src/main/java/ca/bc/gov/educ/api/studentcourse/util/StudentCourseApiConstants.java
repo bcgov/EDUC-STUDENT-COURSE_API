@@ -1,7 +1,15 @@
 package ca.bc.gov.educ.api.studentcourse.util;
 
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
 import java.util.Date;
 
+@Component
+@Getter
+@Setter
 public class StudentCourseApiConstants {
 
     //API end-point Mapping constants
@@ -25,6 +33,10 @@ public class StudentCourseApiConstants {
     
     public static final String TRAX_DATE_FORMAT = "yyyyMM";
     
-    public static final String ENDPOINT_COURSE_BY_CRSE_CODE_URL="${endpoint.course-api.course_by_crse_code.url}";
-    public static final String ENDPOINT_COURSE_BY_CRSE_CODE_ONLY="${endpoint.course-api.course_by_crse_code_only.url}";
+    //Endpoints
+    @Value("${endpoint.course-api.course_by_crse_code.url}")
+    private String courseByCourseCodeUrl;
+
+    @Value("${endpoint.course-api.course_by_crse_code_only.url}")
+    private String courseByCourseCodeOnlyUrl;
 }
