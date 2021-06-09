@@ -89,7 +89,7 @@ public class StudentCourseServiceTest {
         when(this.requestHeadersMock.retrieve()).thenReturn(this.responseMock);
         when(this.responseMock.bodyToMono(Course.class)).thenReturn(Mono.just(course));
 
-        var result = studentCourseService.getStudentCourseList(studentCourseId.getPen(), "accessToken", false);
+        var result = studentCourseService.getStudentCourseList(studentCourseId.getPen(), "accessToken", true);
         assertThat(result).isNotNull();
         assertThat(result.isEmpty()).isFalse();
         StudentCourse responseStudentCourse = result.get(0);
@@ -125,7 +125,7 @@ public class StudentCourseServiceTest {
         when(this.requestHeadersMock.retrieve()).thenReturn(this.responseMock);
         when(this.responseMock.bodyToMono(Course.class)).thenReturn(Mono.just(course));
 
-        var result = studentCourseService.getStudentCourseList(studentCourseId.getPen(), "accessToken", false);
+        var result = studentCourseService.getStudentCourseList(studentCourseId.getPen(), "accessToken", true);
         assertThat(result).isNotNull();
         assertThat(result.isEmpty()).isFalse();
         StudentCourse responseStudentCourse = result.get(0);
